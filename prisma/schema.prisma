@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Funcionario {
+  id  String              @id @default(uuid())
+  name String
+  tipo String
+  senha String
+  created_at DateTime    @default(now())
+  pedido  Pedido[]
+
+}
+
+
+model Item {
+  id             Int         @id @default(autoincrement())
+  description    String     
+  name           String         @unique
+  value          Float
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+  itens_pedido   ItensPedido[]    @relation("item")
+  @@map("items")  
+}
+
+
+model Pedido {
+  id                Int           @id @default(autoincrement())
+  total_value       Int 
+  funcionario       Funcionario            @relation(fields: [id_funcionario], references: [id])
+  id_funcionario    String 
+  forma_pgto        String
+  itens_pedido      ItensPedido[] @relation("pedido")
+  @@map("pedidos")
+}
+
+
+model ItensPedido {
+  item      Item   @relation("item", fields: [id_item], references: [id])
+  id_item   Int
+  pedido    Pedido  @relation("pedido", fields: [id_pedido], references: [id])
+  id_pedido Int
+  qtd       Int
+  
+  @@id([id_item, id_pedido])
+  @@map("itenspedido")
+}
+
+//model Pagamento {
+  //nro_pgto Int @id @default(autoincrement())
+
+  
+//}
