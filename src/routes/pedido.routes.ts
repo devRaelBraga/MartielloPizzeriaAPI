@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CreatePedidoController } from "../modules/pedido/useCases/CreatePedidoController";
+import { CreatePedidoController } from "../modules/pedido/Controllers/CreatePedidoController";
 
 const createPedidoController = new CreatePedidoController();
 const pedidoRoutes = Router();
