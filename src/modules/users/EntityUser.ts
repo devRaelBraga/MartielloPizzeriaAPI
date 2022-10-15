@@ -7,16 +7,20 @@ export class EntityUser {
     async signup({name, senha, tipo}: CreateUserDTO): Promise<Funcionario>{
         //const user = await prisma.
     //}
-
-        const user = await prisma.funcionario.create({
-            data: {
-                name,
-                senha,
-                tipo
-            }
-        });
-        
-        return user;
+        try{
+            const user = await prisma.funcionario.create({
+                data: {
+                    name,
+                    senha,
+                    tipo
+                }
+            });
+            
+            return user;
+        }
+        catch{
+            console.log("Deu ruim mané, arruma isso daí e tenta de novo. From: EntityUser: signup() method.");
+        }
     }
 
     async login({id, senha}:LoginUserDTO) {
@@ -26,6 +30,10 @@ export class EntityUser {
             }
         });
 
-        console.log(uid)
+        if(uid.senha == senha){
+            return uid;
+        }
+        
+        return false;
     }
 }

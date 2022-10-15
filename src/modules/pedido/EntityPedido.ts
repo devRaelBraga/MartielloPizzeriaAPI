@@ -7,14 +7,30 @@ export class EntityPedido {
         //const user = await prisma.
     //}
 
-        const pedido = await prisma.pedido.create({
-            data: {
-                total_value,
-                id_funcionario,
-                forma_pgto
-            }
-        });
-        
-        return pedido;
+        try{
+            const pedido = await prisma.pedido.create({
+                data: {
+                    total_value,
+                    id_funcionario,
+                    forma_pgto
+                }
+            });
+            
+            return pedido;
+        }
+        catch{
+            console.log("Toma vergonha na cara, faz esse negócio direito. From: EntityPedido: addnew() method.");
+        }
+    }
+
+    async getall(): Promise<Pedido[]>{
+        try{
+            const pedidos = await prisma.pedido.findMany({});
+
+            return pedidos;
+        }
+        catch{
+            console.log("achei q n ia quebrar mas quebrou");
+        }
     }
 }

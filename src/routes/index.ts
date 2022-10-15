@@ -7,6 +7,6 @@ const routes = Router();
 
 routes.use("/users", userRoutes);
 routes.use("/items", itemRoutes);
-routes.use("/pedido", pedidoRoutes);
+routes.use("/pedidos", pedidoRoutes);
 
 export { routes }
