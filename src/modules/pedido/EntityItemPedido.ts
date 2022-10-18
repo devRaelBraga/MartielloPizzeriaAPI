@@ -1,8 +1,8 @@
+import { ItensPedido } from "@prisma/client";
 import { prisma } from "../../prisma/client";
-import { CreateItemDTO } from "../items/dtos/CreateItemDTO";
 import { ItemsPedidoDTO } from "./dtos/ItemsPedidoDTO";
 
-export class CreateItemPedido {
+export class EntityItemPedido {
     async additem({id_item, id_pedido, qtd}: ItemsPedidoDTO): Promise<void> {
         //verificar o id do item e do pedido
 
@@ -29,5 +29,18 @@ export class CreateItemPedido {
             }
         }
         )
+    }
+
+    async getItemsPedido({id_pedido}: ItemsPedidoDTO): Promise<ItensPedido[]> {
+        try{
+            const items = await prisma.itensPedido.findMany({
+                where: {id_pedido: id_pedido}
+            });
+
+            return items;
+        }
+        catch{
+            console.log("deu erro no getitemspedido");
+        }
     }
 }

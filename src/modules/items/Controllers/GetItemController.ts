@@ -10,7 +10,7 @@ export class GetItemController {
 
             const result = await item.getItem({id});
 
-            res.status(201).send(result);
+            return res.status(201).json(result);
         }
         catch{
             console.log("sla");

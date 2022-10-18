@@ -2,6 +2,8 @@ import { Funcionario } from "@prisma/client"
 import { prisma } from "../../prisma/client";
 import { CreateUserDTO } from "./dtos/CreateUserDTO";
 import { LoginUserDTO } from "./dtos/LoginUserDTO";
+import * as dotenv from "dotenv";
+dotenv.config({ path: '../../../.env' });
 
 export class EntityUser {
     async signup({name, senha, tipo}: CreateUserDTO): Promise<Funcionario>{
@@ -31,9 +33,20 @@ export class EntityUser {
         });
 
         if(uid.senha == senha){
+            process.env.USER = uid.id;
             return uid;
         }
         
         return false;
+    }
+
+    async getNamebyID({ id }: LoginUserDTO) {
+        const uid = await prisma.funcionario.findUnique({
+            where: {
+                id
+            }
+        });
+
+        return uid.name;
     }
 }
