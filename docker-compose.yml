@@ -4,7 +4,7 @@ networks:
     driver: bridge
 
 volumes:
-  arkade_api_node_modules:
+  MartielloPizzeria_node_modules:
     name: MartielloPizzeria_node_modules
     driver: local
 
