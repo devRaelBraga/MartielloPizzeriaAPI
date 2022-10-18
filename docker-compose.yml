@@ -1,0 +1,27 @@
+networks:
+  arkade:
+    name: site
+    driver: bridge
+
+volumes:
+  arkade_api_node_modules:
+    name: MartielloPizzeria_node_modules
+    driver: local
+
+services:
+  backend:
+    build: .
+    volumes:
+      - .:/home/MartielloPizzeria
+      - MartielloPizzeria_node_modules:/home/MartielloPizzeria/node_modules
+    restart: always
+    command: yarn dev
+    ports: 
+      - 3005:3005
+    networks:
+      - site
+  #whoami:
+    # A container that exposes an API to show its IP address
+    #image: traefik/whoami
+    #labels:
+      #- "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
