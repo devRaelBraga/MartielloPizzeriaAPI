@@ -23,6 +23,7 @@ model Item {
   description    String     
   name           String         @unique
   value          Float
+  link_foto      String         @default("None")
   created_at     DateTime       @default(now())
   updated_at     DateTime       @updatedAt
   itens_pedido   ItensPedido[]    @relation("item")
@@ -36,6 +37,7 @@ model Pedido {
   funcionario       Funcionario            @relation(fields: [id_funcionario], references: [id])
   id_funcionario    String 
   forma_pgto        String
+  created_at     DateTime       @default(now())
   itens_pedido      ItensPedido[] @relation("pedido")
   @@map("pedidos")
 }

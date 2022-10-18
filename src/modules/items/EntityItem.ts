@@ -1,9 +1,10 @@
 import { Item } from "@prisma/client"
 import { prisma } from "../../prisma/client";
 import { CreateItemDTO } from "./dtos/CreateItemDTO";
+import { GetItemDTO } from "./dtos/GetItemDTO";
 
 export class EntityItem {
-    async addnew({name, description, value}: CreateItemDTO): Promise<Item>{
+    async addnew({name, description, value, link_foto}: CreateItemDTO): Promise<Item>{
         //const user = await prisma.
     //}
         try{
@@ -11,7 +12,8 @@ export class EntityItem {
                 data: {
                     name,
                     description,
-                    value
+                    value,
+                    link_foto
                 }
             });
             
@@ -30,6 +32,21 @@ export class EntityItem {
         }
         catch{
             console.log("achei q n ia quebrar mas quebrou");
+        }
+    }
+
+    async getItem({ id }: GetItemDTO){
+        try{
+            const item = await prisma.item.findUnique({
+                where: {
+                    id
+                }
+            });
+
+            return item;
+        }
+        catch{
+            console.log("achei q ia quebrar mas quebrou");
         }
     }
 }
